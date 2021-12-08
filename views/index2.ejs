@@ -21,15 +21,16 @@
 
   
 <div class="container-fluid p-5 bg-primary text-white text-center">
-  <h1>센서 전주 1a</h1>
+  <h1>센서 전주  2b</h1>
 </div>
   
 <ul class="nav justify-content-center">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">전주 1a</a>
+    <a class="nav-link" href="./">전주 1a</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./index2">전주 2b</a>
+    
+    <a class="nav-link active" aria-current="page" href="#">전주 2b</a>
   </li>
   
 </ul>
@@ -39,22 +40,22 @@
 
   <div class="row">
     
-    <div class="col-sm-3">
-      <h3>전주 1a</h3>
-      <p> SALT : <%= salts['263fc2d1-281f-dc0c-4e5e-437145d8ed70'][1] %> ppm </p>
-      <p> TEMP : <%= temperature['263fc2d1-281f-dc0c-4e5e-437145d8ed70'][1] %> ℃ </p>
-      <p> BATT : <%= battery['263fc2d1-281f-dc0c-4e5e-437145d8ed70'][1] %> % </p>
-    </div>
+   
 
-    
+    <div class="col-sm-3">
+      <h3>전주 2b</h3>
+      <p> SALT : <%= salts['7c6e3a93-a0bb-f33f-b538-4ea07a3974ec'][1] %> ppm </p>
+      <p> TEMP : <%= temperature['7c6e3a93-a0bb-f33f-b538-4ea07a3974ec'][1] %> ℃ </p>
+      <p> BATT : <%= battery['7c6e3a93-a0bb-f33f-b538-4ea07a3974ec'][1] %> % </p>
+    </div>
    
    
     <div class="row" style="height: 500px;">
-     <%-include('grape.ejs')%>
+     <%-include('grape2.ejs')%>
     </div>
     
-
-    
+  </div>
+  
 
   
 </div>

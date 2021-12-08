@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
   const queryApi = client.getQueryApi(org)
   //const query = `from(bucket: "manta") |> range(start: -1h)`
-  const fluxQuery = 'from(bucket:"manta") |>  range(start: -3d) |> filter(fn: (r) => r["device_id"] == "c04c7bda-9093-770c-fc73-4317574038ce" or r["device_id"] == "263fc2d1-281f-dc0c-4e5e-437145d8ed70" or r["device_id"] == "67212109-a88b-8600-9727-40624e324396") |> filter(fn: (r) => r["_field"] == "salt" or r["_field"] == "battery" or r["_field"] == "temperature")'
+  const fluxQuery = 'from(bucket:"manta") |>  range(start: -3d) |> filter(fn: (r) => r["device_id"] == "7c6e3a93-a0bb-f33f-b538-4ea07a3974ec" or r["device_id"] == "263fc2d1-281f-dc0c-4e5e-437145d8ed70" ) |> filter(fn: (r) => r["_field"] == "salt" or r["_field"] == "battery" or r["_field"] == "temperature")'
   
   var items = []
   var dicItem = {}
@@ -26,9 +26,9 @@ router.get('/', function(req, res, next) {
       const o = tableMeta.toObject(row)
       //items.push(o)
       //console.log(o)
-      console.log(
-        `${o._time} (${o.device_id}): ${o._field}=${o._value}`
-      )
+      // console.log(
+      //   `${o._time} (${o.device_id}): ${o._field}=${o._value}`
+      // )
       if(`${o._field}` =="salt")
         items.push({"time":`${o._time}`,"device_id":`${o.device_id}`,"type":"salt","value":`${o._value}`})
       else if(`${o._field}` =="battery")
@@ -50,6 +50,7 @@ router.get('/', function(req, res, next) {
       var devicelist_battery = {}
       var devicelist_temperature = {}
 
+      var data1 =[]
       var data2 =[]
       for(idx in items)
       {
@@ -62,12 +63,20 @@ router.get('/', function(req, res, next) {
         if(items[idx]['type']=="temperature")
           devicelist_temperature[items[idx]['device_id']] = [items[idx]['time'],items[idx]['value']]
 
+        if(items[idx]['device_id']=="7c6e3a93-a0bb-f33f-b538-4ea07a3974ec" && items[idx]['type']=="salt")
+        {
+          const unixTimeZero = Date.parse(items[idx]['time']);
+          data1.push({date:unixTimeZero,value:items[idx]['value']*10})
+          
+          //console.log('unixTimeZero',unixTimeZero)
+
+        }
         if(items[idx]['device_id']=="263fc2d1-281f-dc0c-4e5e-437145d8ed70" && items[idx]['type']=="salt")
         {
           const unixTimeZero = Date.parse(items[idx]['time']);
           data2.push({date:unixTimeZero,value:items[idx]['value']*10})
           
-          console.log('unixTimeZero',unixTimeZero)
+          //console.log('unixTimeZero',unixTimeZero)
 
         }
       }
@@ -82,7 +91,7 @@ router.get('/', function(req, res, next) {
 
 
   //    res.send({  result: 'success',items: items });
-      res.render('index', { title: '아쿠아프로(하동)',salts:devicelist_salt,battery:devicelist_battery,temperature:devicelist_temperature ,data2:JSON.stringify(data2)});
+      res.render('index', { title: '전주 테스트',salts:devicelist_salt,battery:devicelist_battery,temperature:devicelist_temperature ,data1:JSON.stringify(data1),data2:JSON.stringify(data2)});
     }
   }
   
@@ -94,5 +103,7 @@ router.get('/', function(req, res, next) {
 
   
 });
+
+
 
 module.exports = router;
