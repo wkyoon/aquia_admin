@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
   const queryApi = client.getQueryApi(org)
   //const query = `from(bucket: "manta") |> range(start: -1h)`
-  const fluxQuery = 'from(bucket:"manta") |>  range(start: -3d) |> filter(fn: (r) => r["device_id"] == "7c6e3a93-a0bb-f33f-b538-4ea07a3974ec" or r["device_id"] == "263fc2d1-281f-dc0c-4e5e-437145d8ed70" ) |> filter(fn: (r) => r["_field"] == "salt" or r["_field"] == "battery" or r["_field"] == "temperature")'
+  const fluxQuery = 'from(bucket:"manta") |>  range(start: -3d) |> filter(fn: (r) => r["device_id"] == "7c6e3a93-a0bb-f33f-b538-4ea07a3974ec" or r["device_id"] == "1ed3e296-d046-382d-210c-4a294e96943c" ) |> filter(fn: (r) => r["_field"] == "salt" or r["_field"] == "battery" or r["_field"] == "temperature")'
   
   var items = []
   var dicItem = {}
@@ -66,15 +66,15 @@ router.get('/', function(req, res, next) {
         if(items[idx]['device_id']=="7c6e3a93-a0bb-f33f-b538-4ea07a3974ec" && items[idx]['type']=="salt")
         {
           const unixTimeZero = Date.parse(items[idx]['time']);
-          data1.push({date:unixTimeZero,value:items[idx]['value']*10})
+          data2.push({date:unixTimeZero,value:items[idx]['value']*10})
           
           //console.log('unixTimeZero',unixTimeZero)
 
         }
-        if(items[idx]['device_id']=="263fc2d1-281f-dc0c-4e5e-437145d8ed70" && items[idx]['type']=="salt")
+        if(items[idx]['device_id']=="1ed3e296-d046-382d-210c-4a294e96943c" && items[idx]['type']=="salt")
         {
           const unixTimeZero = Date.parse(items[idx]['time']);
-          data2.push({date:unixTimeZero,value:items[idx]['value']*10})
+          data1.push({date:unixTimeZero,value:items[idx]['value']*10})
           
           //console.log('unixTimeZero',unixTimeZero)
 
@@ -84,7 +84,7 @@ router.get('/', function(req, res, next) {
       // console.log(devicelist_salt)
       // console.log(devicelist_battery)
       // console.log(devicelist_temperature)
-      console.log(data2)
+      //console.log(data2)
       // for (var key in dicItem) { 
       //   console.log("key : " + key +", value : " + dicItem[key]); 
       // }
